@@ -71,8 +71,16 @@ function addLine() {
         txt: '',
         size: 30,
         align: 'center',
-        color: 'white'
+        color: 'orange'
     }
     gMeme.lines.push(newLine)
     gMeme.selectedLineIdx++
+}
+
+function moveLine() {
+    gMeme.selectedLineIdx++
+    if (gMeme.selectedLineIdx = (gMeme.lines).length) {
+        console.log('hi')
+        gMeme.selectedLineIdx = 0
+    }
 }

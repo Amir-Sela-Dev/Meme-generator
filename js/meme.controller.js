@@ -28,17 +28,22 @@ function drawMeme(imgId, lineIdx, lines) {
     elImg.src = img.url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
-        if (lineIdx === 0) drawText(lines, 0, 238, 40)
-        else if (lineIdx === 1) {
-            drawText(lines, 0, 238, 40)
-            drawText(lines, 1, 238, 440)
-        }
+        lines.forEach(line => {
+            console.log('line', line)
+            drawText(line, lineIdx, 238, 40)
+            // if (lineIdx === 0) drawText(line, 0, 238, 40)
+            // else if (lineIdx === 1) {
+            //     drawText(line, 1, 238, 440)
+            // } else drawText(line, 0, 238, 240)
+
+
+        });
 
     }
 }
 
-function drawText(lines, lineIdx, x, y) {
-    var line = lines[lineIdx]
+function drawText(line, lineIdx, x, y) {
+    // var line = lines[lineIdx]
     const { txt, size, align, color } = line
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
@@ -46,13 +51,18 @@ function drawText(lines, lineIdx, x, y) {
     gCtx.font = `${size}px Impact`;
     gCtx.textAlign = align
     gCtx.textBaseline = 'middle'
-
+    if (lineIdx === 1) {
+        y = 440
+    } else if (lineIdx >= 2) {
+        y = 240
+    }
     gCtx.fillText(txt, x, y) // Draws (fills) a given text at the given (x, y) position.
     gCtx.strokeText(txt, x, y) // Draws (strokes) a given text at the given (x, y) position.
 }
 
 function renderMeme() {
     var { selectedImgId, selectedLineIdx, lines } = getMeme()
+
     drawMeme(selectedImgId, selectedLineIdx, lines)
 }
 
@@ -75,5 +85,9 @@ function onChangeFontSize(num) {
 function onAddLine() {
     addLine()
     renderMeme()
+}
+
+function onMoveLine() {
+    moveLine()
 }
 
