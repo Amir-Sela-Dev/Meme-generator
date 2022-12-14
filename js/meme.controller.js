@@ -21,30 +21,41 @@ function renderCanvas() {
     gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height)
 }
 
-function drawImg2(num) {
+function drawMeme(imgId, lineIdx, lines) {
+    var img = getImgById(imgId)
+    console.log('img', img)
     const elImg = new Image()
-    elImg.src = 'img/2.jpg'
+    elImg.src = img.url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText('Im a meme', 125, 40)
+        drawText(lines, lineIdx, 125, 40)
     }
 }
 
-function drawText(text, x, y) {
+function drawText(lines, lineIdx, x, y) {
+    var line = lines[lineIdx]
+    console.log('line', line)
+    const { txt, size, align, color } = line
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
-    gCtx.font = "35px Impact";
-    gCtx.textAlign = 'center'
+    gCtx.fillStyle = color
+    gCtx.font = `${size}px Impact`;
+    gCtx.textAlign = align
     gCtx.textBaseline = 'middle'
 
-    gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
-    gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+    gCtx.fillText(txt, x, y) // Draws (fills) a given text at the given (x, y) position.
+    gCtx.strokeText(txt, x, y) // Draws (strokes) a given text at the given (x, y) position.
 }
 
 function renderMeme() {
-    drawImg2(1)
+    var { selectedImgId, selectedLineIdx, lines } = getMeme()
+    drawMeme(selectedImgId, selectedLineIdx, lines)
 }
 
+
+function onSetMemeText(txt) {
+    setLineTxt(txt)
+    renderMeme()
+}
 
 

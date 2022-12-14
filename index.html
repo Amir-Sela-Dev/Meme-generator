@@ -38,7 +38,7 @@
                 <canvas class="canvas" id="my-canvas" height="250" width="250"></canvas>
             </div>
             <div class="editor">
-                <input type="text" class="meme-text">
+                <input type="text" class="meme-text" oninput="onSetMemeText(this.value)">
                 <div class="button-line1">
                     <button class="btn">↑↓</button>
                     <button class="btn">+</button>
@@ -60,8 +60,10 @@
             </div>
         </div>
     </main>
-
+    <!-- <img class="gallery-img" src="img/1.jpg" alt="" data-id="0" onclick="onImgClick()"> -->
     <footer class="main-footer"></footer>
+    <script src="js/service/meme.service.js"></script>
+    <script src="js/gallery.controller.js"></script>
     <script src="js/meme.controller.js"></script>
 </body>
 
