@@ -10,19 +10,19 @@
 </head>
 
 <body class="grid">
-    <header class="main-header grid">
+    <header class="main-header flex align-center space-between">
         <div class="logo">MEMEGEN</div>
         <nav class="main-nav">
-            <ul class="clean-list">
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Memes</a></li>
-                <li><a href="#">About</a></li>
+            <ul class="clean-list flex">
+                <li class="gallery-nav"><a href="#">Gallery</a></li>
+                <li class="memes-nav"><a href="#">Memes</a></li>
+                <li class="about-nav"><a href="#">About</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="main-content">
-        <div class="gallery">
+        <div class="gallery grid">
             <div class="actions">
                 <div class="search-cell">
                     <input type="text" class="filter" placeholder="Search">
@@ -30,9 +30,9 @@
                 <div class="searched"></div>
                 <button class="more">More</button>
             </div>
-            <div class="img-container"></div>
+            <div class="img-container flex"></div>
         </div>
-        <div class="editor-container">
+        <div class="editor-container" hidden>
 
             <div class="canvas-container">
                 <canvas class="canvas" id="my-canvas" height="250" width="250"></canvas>
@@ -61,7 +61,9 @@
         </div>
     </main>
     <!-- <img class="gallery-img" src="img/1.jpg" alt="" data-id="0" onclick="onImgClick()"> -->
-    <footer class="main-footer"></footer>
+    <footer class="main-footer">
+        <h2>Made By Amir Sela</h2>
+    </footer>
     <script src="js/service/meme.service.js"></script>
     <script src="js/gallery.controller.js"></script>
     <script src="js/meme.controller.js"></script>

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../Dropbox/CaNov22-Materials/Day25-Design2LivePage/inClass/Minimo/Minimo"
+		},
+		{
+			"path": "../../../../Dropbox/CaNov22-ExcerciseSubmission/Amir Sela/Day27-GRID/basic-gris-EX"
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501,
+		"liveServer.settings.multiRootWorkspaceName": "Sprint2!"
+	}
+}
