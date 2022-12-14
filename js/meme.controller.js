@@ -4,12 +4,13 @@
 var gElCanvas
 var gCtx
 
-init()
-function init() {
+
+function onInit() {
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
     // resizeCanvas()
     // addListeners()
+    renderGallery()
     renderCanvas()
     renderMeme()
 }
@@ -23,7 +24,6 @@ function renderCanvas() {
 
 function drawMeme(imgId, lineIdx, lines) {
     var img = getImgById(imgId)
-    console.log('img', img)
     const elImg = new Image()
     elImg.src = img.url
     elImg.onload = () => {
@@ -34,7 +34,6 @@ function drawMeme(imgId, lineIdx, lines) {
 
 function drawText(lines, lineIdx, x, y) {
     var line = lines[lineIdx]
-    console.log('line', line)
     const { txt, size, align, color } = line
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
@@ -58,4 +57,13 @@ function onSetMemeText(txt) {
     renderMeme()
 }
 
+function onChangeColor(color) {
+    setColor(color)
+    renderMeme()
+}
+
+function onChangeFontSize(num) {
+    setFontSize(num)
+    renderMeme()
+}
 

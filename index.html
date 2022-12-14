@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body class="grid">
+<body class="grid" onload="onInit()">
     <header class="main-header flex align-center space-between">
         <div class="logo">MEMEGEN</div>
         <nav class="main-nav">
@@ -32,10 +32,9 @@
             </div>
             <div class="img-container flex"></div>
         </div>
-        <div class="editor-container" hidden>
-
+        <div class="editor-container">
             <div class="canvas-container">
-                <canvas class="canvas" id="my-canvas" height="250" width="250"></canvas>
+                <canvas class="canvas" id="my-canvas" height="546" width="476"></canvas>
             </div>
             <div class="editor">
                 <input type="text" class="meme-text" oninput="onSetMemeText(this.value)">
@@ -45,17 +44,20 @@
                     <button class="btn">🗑</button>
                 </div>
                 <div class="button-line2">
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
+                    <input type="color" id="color" name="color" form="frmRegister" value="#ffa500"
+                        oninput="onChangeColor(this.value)" />
+                    <button class="font-size" onclick="onChangeFontSize(2)">A+</button>
+                    <button class="font-size" onclick="onChangeFontSize(-2)">A-</button>
+                    <button>#</button>
+                    <button>#</button>
+                    <button>#</button>
+                    <button>#</button>
                 </div>
                 <div class="stickers"></div>
                 <div class="load-actions">
-                    <button></button><button></button><button></button>
+                    <button>#</button>
+                    <button>#</button>
+                    <button>#</button>
                 </div>
             </div>
         </div>

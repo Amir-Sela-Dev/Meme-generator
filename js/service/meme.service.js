@@ -55,3 +55,13 @@ function setLineTxt(txt) {
 function setImg(imgId) {
     gMeme.selectedImgId = imgId
 }
+
+function setColor(color) {
+    const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].color = color
+}
+
+function setFontSize(num) {
+    const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].size += num
+}

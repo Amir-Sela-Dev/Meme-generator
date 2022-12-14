@@ -1,7 +1,6 @@
 'use strict'
+var isGallery = true
 
-
-renderGallery()
 function renderGallery() {
     var imgs = getImgs()
     var strHtmls = imgs.map(img => `
@@ -13,6 +12,9 @@ function renderGallery() {
 }
 
 function onImgSelect(imgId) {
+    isGallery = false
+    document.querySelector('.gallery').style.display = 'none'
+    document.querySelector('.editor-container').style.display = 'grid'
     setImg(imgId)
     renderMeme()
 }
