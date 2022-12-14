@@ -65,3 +65,14 @@ function setFontSize(num) {
     const { selectedLineIdx, lines } = gMeme
     lines[selectedLineIdx].size += num
 }
+
+function addLine() {
+    var newLine = {
+        txt: '',
+        size: 30,
+        align: 'center',
+        color: 'white'
+    }
+    gMeme.lines.push(newLine)
+    gMeme.selectedLineIdx++
+}

@@ -28,7 +28,12 @@ function drawMeme(imgId, lineIdx, lines) {
     elImg.src = img.url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText(lines, lineIdx, 125, 40)
+        if (lineIdx === 0) drawText(lines, 0, 238, 40)
+        else if (lineIdx === 1) {
+            drawText(lines, 0, 238, 40)
+            drawText(lines, 1, 238, 440)
+        }
+
     }
 }
 
@@ -64,6 +69,11 @@ function onChangeColor(color) {
 
 function onChangeFontSize(num) {
     setFontSize(num)
+    renderMeme()
+}
+
+function onAddLine() {
+    addLine()
     renderMeme()
 }
 
