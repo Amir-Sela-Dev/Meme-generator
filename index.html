@@ -10,7 +10,7 @@
 </head>
 
 <body class="grid" onload="onInit()">
-    <header class="main-header flex align-center space-between">
+    <header class="main-header grid ">
         <div class="logo">MEMEGEN</div>
         <nav class="main-nav">
             <ul class="clean-list flex">
@@ -22,6 +22,9 @@
     </header>
 
     <main class="main-content">
+        <div class="saved-modal">
+            <h6>Meme saved!</h6>
+        </div>
         <div class="gallery grid">
             <div class="actions">
                 <div class="search-cell">
@@ -29,6 +32,7 @@
                 </div>
                 <div class="searched"></div>
                 <button class="more">More</button>
+                <button class="flexible" onclick="onFlexible()">Im Flexible</button>
             </div>
             <div class="img-container flex"></div>
         </div>
@@ -58,8 +62,8 @@
                 </div>
                 <div class="stickers"></div>
                 <div class="load-actions">
-                    <button class="btn3 save">Save</button>
-                    <button class="btn3 download">Download</button>
+                    <button class="btn3 save" onclick="onSave()">Save</button>
+                    <button class="btn3 download" onclick="onDownload()">Download</button>
                     <button class="btn3 publish">Publish</button>
                 </div>
             </div>
@@ -69,7 +73,9 @@
     <footer class="main-footer">
         <h2>Made By Amir Sela</h2>
     </footer>
+    <script src="js/service/storage.service.js"></script>
     <script src="js/service/meme.service.js"></script>
+    <script src="js/service/utils.service.js"></script>
     <script src="js/gallery.controller.js"></script>
     <script src="js/meme.controller.js"></script>
 </body>

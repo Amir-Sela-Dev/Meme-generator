@@ -8,6 +8,7 @@ var gCtx
 function onInit() {
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
+    console.log('gCtx', gCtx)
     // resizeCanvas()
     // addListeners()
     renderGallery()
@@ -21,6 +22,13 @@ function renderCanvas() {
     //Clear the canvas,  fill it with grey background
     gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height)
 }
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container')
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
+}
+
 
 function drawMeme(imgId, lineIdx, lines) {
     var img = getImgById(imgId)
@@ -96,5 +104,25 @@ function onDeleteLine() {
 function onMoveLine(num) {
     moveLine(num)
     renderMeme()
+}
+
+function getElCanvas() {
+    return gElCanvas
+}
+
+function onSave() {
+    // window.open(gElCanvas[0].toDataURL())
+    isSavedMeme = true
+    saveMeme()
+    openModal()
+    setTimeout(() => {
+        closeModal();
+        openSavedMemes()
+        renderGallery()
+    }, 2000)
+}
+
+function onDownload() {
+
 }
 

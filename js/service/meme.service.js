@@ -1,5 +1,5 @@
 'use strict'
-
+const STORAGE_KEY = 'memeDB'
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
 var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
 { id: 2, url: 'img/2.jpg', keywords: ['funny', 'cat'] },
@@ -20,6 +20,10 @@ var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
 { id: 17, url: 'img/17.jpg', keywords: ['funny', 'cat'] },
 { id: 18, url: 'img/18.jpg', keywords: ['funny', 'cat'] },
 ];
+var gElServiceCanvas = document.getElementById('my-canvas')
+var xMiddle = gElServiceCanvas.width / 2
+var yMiddle = gElServiceCanvas.height / 2
+var canvasHeight = gElServiceCanvas.height
 var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
@@ -29,10 +33,45 @@ var gMeme = {
             size: 30,
             align: 'center',
             color: 'white',
-            location: { x: 238, y: 40 }
+            location: { x: xMiddle, y: 40 }
         }
     ]
 }
+
+var gSavedMemes = loadFromStorage(STORAGE_KEY) || [
+    {
+        selectedImgId: 1,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'Im a saved meme!',
+                size: 20,
+                align: 'center',
+                color: 'white',
+                location: { x: xMiddle, y: 40 }
+            }
+        ]
+    }
+
+]
+
+var gReadytxt = [
+    '2020 in one pic',
+    'Back to school vibes',
+    'Going into my late 20s:',
+    'Feeling like:',
+    'After lesson with Asi',
+    'My brain feel like:',
+    'Are you sure your ok?',
+    'Me after a day of work:',
+    'Me after a day of school',
+    'When im at the beach:',
+    'Explain your life in meme',
+    'Well done!',
+    'Sucsses!',
+    'Me after a famely dinner',
+    'My life be like:'
+]
 
 function getMeme() {
     return gMeme
@@ -41,6 +80,7 @@ function getMeme() {
 function getImgs() {
     return gImgs
 }
+
 
 function getImgById(imgId) {
     const img = gImgs.find(img => imgId === img.id)
@@ -69,6 +109,7 @@ function setFontSize(num) {
 }
 
 function addLine() {
+
     gMeme.selectedLineIdx++
     if (gMeme.lines.length === 0) gMeme.selectedLineIdx = 0
     var newLine = {
@@ -78,10 +119,10 @@ function addLine() {
         color: 'white',
     }
     const { selectedLineIdx } = gMeme
-    let x = 238
+    let x = xMiddle
     let y = 40
-    if (selectedLineIdx === 1) y = 440
-    if (selectedLineIdx >= 2) y = 240
+    if (selectedLineIdx === 1) y = canvasHeight - 40
+    if (selectedLineIdx >= 2) y = yMiddle
     newLine.location = { x, y }
     gMeme.lines.push(newLine)
 }
@@ -105,4 +146,60 @@ function moveLine(num) {
     const { selectedLineIdx, lines } = gMeme
     const line = lines[selectedLineIdx]
     line.location.y += num
+}
+
+
+function flexibleMeme() {
+    const txt = gReadytxt[getRandomIntInclusive(0, 14)]
+    setLineTxt(txt)
+    const color = getRandomColor()
+    setColor(color)
+    const numOfLines = getRandomIntInclusive(1, 2)
+    const size = getRandomIntInclusive(1, 15)
+    setFontSize(size)
+    if (numOfLines === 2) {
+        addLine()
+        const txt = gReadytxt[getRandomIntInclusive(0, 14)]
+        setLineTxt(txt)
+        const color = getRandomColor()
+        setColor(color)
+        const size = getRandomIntInclusive(1, 15)
+        setFontSize(size)
+    }
+}
+
+function _saveMemeToStorage() {
+    saveToStorage(STORAGE_KEY, gSavedMemes)
+}
+
+
+function saveMeme() {
+    gSavedMemes.push(gMeme)
+    saveToStorage(STORAGE_KEY, gSavedMemes)
+}
+
+function openModal() {
+    var elModal = document.querySelector('.saved-modal')
+    elModal.classList.add('open-modal')
+}
+
+function closeModal() {
+    var elModal = document.querySelector('.saved-modal')
+    elModal.classList.remove('open-modal')
+
+}
+
+function getSavedMemes() {
+    return loadFromStorage(STORAGE_KEY)
+}
+
+function getSavedImgs() {
+    var saved = getSavedMemes()
+    var savedImgs = []
+    saved.forEach(meme => {
+        var imgIdx = meme.selectedImgId
+        var img = getImgById(imgIdx)
+        savedImgs.push(img)
+    });
+    return savedImgs
 }
