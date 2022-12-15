@@ -39,9 +39,11 @@
             <div class="editor">
                 <input type="text" class="meme-text" oninput="onSetMemeText(this.value)">
                 <div class="button-line1">
-                    <button class="btn" onclick="onMoveLine()">↑↓</button>
+                    <button class="btn" onclick="onSwitchLine()">↑↓</button>
                     <button class="btn" onclick="onAddLine()">+</button>
-                    <button class="btn">🗑</button>
+                    <button class="btn" onclick="onDeleteLine()">🗑</button>
+                    <button class="btn" onclick="onMoveLine(-10)">↑</button>
+                    <button class="btn" onclick="onMoveLine(10)">↓</button>
                 </div>
                 <div class="button-line2">
                     <input type="color" id="color" name="color" form="frmRegister" value="#ffa500"
