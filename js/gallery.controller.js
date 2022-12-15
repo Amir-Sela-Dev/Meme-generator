@@ -14,7 +14,7 @@ function renderGallery() {
 function onImgSelect(imgId) {
     isGallery = false
     document.querySelector('.gallery').style.display = 'none'
-    document.querySelector('.editor-container').style.display = 'grid'
+    document.querySelector('.editor-container').style.display = 'flex'
     setImg(imgId)
     renderMeme()
 }

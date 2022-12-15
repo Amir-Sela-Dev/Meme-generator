@@ -71,16 +71,25 @@ function onChangeFontSize(num) {
 }
 
 function onAddLine() {
+    document.querySelector('.meme-text').value = ''
     addLine()
     renderMeme()
 }
 
 function onSwitchLine() {
     switchLine()
+    const { selectedLineIdx, lines } = getMeme()
+    const text = lines[selectedLineIdx].txt
+    document.querySelector('.meme-text').value = text
 }
 
 function onDeleteLine() {
     deleteLine()
+    const { selectedLineIdx, lines } = getMeme()
+    if (lines.length) {
+        var text = lines[selectedLineIdx].txt
+    } else text = ''
+    document.querySelector('.meme-text').value = text
     renderMeme()
 }
 

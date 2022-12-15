@@ -34,32 +34,33 @@
         </div>
         <div class="editor-container">
             <div class="canvas-container">
-                <canvas class="canvas" id="my-canvas" height="546" width="476"></canvas>
+                <canvas class="canvas" id="my-canvas" height="400" width="400"></canvas>
             </div>
             <div class="editor">
-                <input type="text" class="meme-text" oninput="onSetMemeText(this.value)">
+                <input type="text" class="meme-text" oninput="onSetMemeText(this.value)" placeholder="Write Meme Here!">
                 <div class="button-line1">
-                    <button class="btn" onclick="onSwitchLine()">↑↓</button>
-                    <button class="btn" onclick="onAddLine()">+</button>
-                    <button class="btn" onclick="onDeleteLine()">🗑</button>
-                    <button class="btn" onclick="onMoveLine(-10)">↑</button>
-                    <button class="btn" onclick="onMoveLine(10)">↓</button>
+                    <button class="btn add" onclick="onAddLine()">+</button>
+                    <button class="btn delete" onclick="onDeleteLine()">🗑</button>
+                    <button class="btn switch" onclick="onSwitchLine()">↑↓</button>
+                    <button class="btn move" onclick="onMoveLine(-10)">↑</button>
+                    <button class="btn move" onclick="onMoveLine(10)">↓</button>
                 </div>
                 <div class="button-line2">
-                    <input type="color" id="color" name="color" form="frmRegister" value="#ffa500"
+                    <input class="btn btn2" type="color" id="color" name="color" form="frmRegister" value="#ffffff"
                         oninput="onChangeColor(this.value)" />
-                    <button class="font-size" onclick="onChangeFontSize(2)">A+</button>
-                    <button class="font-size" onclick="onChangeFontSize(-2)">A-</button>
-                    <button>#</button>
-                    <button>#</button>
-                    <button>#</button>
-                    <button>#</button>
+                    <button class="btn btn2 font-size" onclick="onChangeFontSize(2)">A+</button>
+                    <button class="btn btn2 font-size" onclick="onChangeFontSize(-2)">A-</button>
+                    <button class="btn btn2">#</button>
+
+                    <button class="btn btn2">#</button>
+                    <button class="btn btn2">#</button>
+                    <button class="btn btn2">#</button>
                 </div>
                 <div class="stickers"></div>
                 <div class="load-actions">
-                    <button>#</button>
-                    <button>#</button>
-                    <button>#</button>
+                    <button class="btn3 save">Save</button>
+                    <button class="btn3 download">Download</button>
+                    <button class="btn3 publish">Publish</button>
                 </div>
             </div>
         </div>
