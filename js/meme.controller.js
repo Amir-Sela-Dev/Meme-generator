@@ -116,8 +116,9 @@ function getElCanvas() {
 }
 
 function onSave() {
+    const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
     isSavedMeme = true
-    saveMeme()
+    saveMeme(imgDataUrl)
     openModal()
     setTimeout(() => {
         closeModal();
@@ -134,5 +135,15 @@ function onOpenSaved() {
 
 function onDownload(elLink) {
     downloadCanvas(elLink)
+}
+
+
+function onUploadImg() {
+    const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
+    function onSuccess(uploadedImgUrl) {
+        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`)
+    }
+    doUploadImg(imgDataUrl, onSuccess)
 }
 

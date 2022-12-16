@@ -695,8 +695,13 @@ canvas {
     }
 
     .editor-container {
+        grid-row: 2/2;
         flex-wrap: wrap;
-        height: 140vh;
+        /* height: 140vh; */
+    }
+
+    .editor {
+        margin-top: 70px;
     }
 
 
@@ -709,6 +714,10 @@ canvas {
     .canvas-container {
         width: 270px;
         max-height: 300px;
+    }
+
+    .main-footer {
+        margin-top: 80%;
     }
 
 }

@@ -4,7 +4,16 @@ var isSavedMeme = false
 
 function renderGallery() {
     var imgs = getImgs()
-    if (isSavedMeme) imgs = getSavedImgs()
+    if (isSavedMeme) {
+        imgs = getSavedImgs()
+        var strHtmls = imgs.map(img => `
+        
+        <img class="gallery-img" src="${img.savedImgUrl}" alt="" data-id="${img.id}" onclick="onSavedImgSelect(${img})">
+    `
+        )
+        document.querySelector('.img-container').innerHTML = strHtmls.join('')
+        return
+    }
     var strHtmls = imgs.map(img => `
             <img class="gallery-img" src="${img.url}" alt="" data-id="${img.id}" onclick="onImgSelect(${img.id})">
         `
@@ -55,4 +64,14 @@ function toggleMenu() {
 function onFilter(filterBy) {
     setFilter(filterBy)
     renderGallery()
+}
+
+
+function onSavedImgSelect(img) {
+    console.log('img', img)
+    isGallery = false
+    document.querySelector('.gallery').style.display = 'none'
+    document.querySelector('.editor-container').style.display = 'flex'
+    setSavedImg(imgId)
+    renderMeme()
 }

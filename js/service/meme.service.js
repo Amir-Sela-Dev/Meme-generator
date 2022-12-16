@@ -51,6 +51,7 @@ var gSavedMemes = loadFromStorage(STORAGE_KEY_MEMES) || [
     {
         selectedImgId: 1,
         selectedLineIdx: 0,
+        imgUrl: 'img/20.jpg',
         lines: [
             {
                 txt: 'Im a saved meme!',
@@ -207,10 +208,11 @@ function _saveMemeToStorage() {
 }
 
 
-function saveMeme() {
+function saveMeme(imdUrl) {
     let memeCopy = JSON.parse(JSON.stringify(gMeme))
-
-    gSavedMemes.push(gMeme)
+    memeCopy.imgUrl = imdUrl
+    console.log('memeCopy', memeCopy)
+    gSavedMemes.push(memeCopy)
     saveToStorage(STORAGE_KEY_MEMES, gSavedMemes)
 }
 
@@ -228,7 +230,6 @@ function closeModal() {
 function getSavedMemes() {
     return loadFromStorage(STORAGE_KEY_MEMES)
 }
-getSavedImgs()
 function getSavedImgs() {
     var saved = getSavedMemes()
     console.log('saved', saved)
@@ -236,6 +237,8 @@ function getSavedImgs() {
     saved.forEach(meme => {
         var imgIdx = meme.selectedImgId
         var img = getImgById(imgIdx)
+        var savedImg = meme.imgUrl
+        img.savedImgUrl = savedImg
         savedImgs.push(img)
     });
     return savedImgs
