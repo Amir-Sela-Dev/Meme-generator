@@ -4,9 +4,7 @@ var isSavedMeme = false
 
 function renderGallery() {
     var imgs = getImgs()
-    console.log('imgs', imgs)
     if (isSavedMeme) imgs = getSavedImgs()
-    console.log('imgs', imgs)
     var strHtmls = imgs.map(img => `
             <img class="gallery-img" src="${img.url}" alt="" data-id="${img.id}" onclick="onImgSelect(${img.id})">
         `
@@ -28,7 +26,6 @@ function onFlexible() {
     onImgSelect(getRandomIntInclusive(1, 18))
 }
 
-onSavedMemes()
 function onSavedMemes() {
     var savedMemes = getSavedMemes()
     console.log('savedMemes', savedMemes)
@@ -42,11 +39,20 @@ function onSavedMemes() {
 
 
 function onOpenGallery() {
+    isSavedMeme = false
     document.querySelector('.gallery').style.display = 'grid'
     document.querySelector('.editor-container').style.display = 'none'
+    renderGallery()
 }
+
+
 
 function toggleMenu() {
     console.log('hi')
     document.body.classList.toggle('menu-open')
+}
+
+function onFilter(filterBy) {
+    setFilter(filterBy)
+    renderGallery()
 }

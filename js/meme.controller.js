@@ -121,6 +121,12 @@ function onSave() {
     }, 2000)
 }
 
+function onOpenSaved() {
+    onOpenGallery()
+    isSavedMeme = true
+    renderGallery()
+}
+
 function onDownload(elLink) {
     downloadCanvas(elLink)
 }

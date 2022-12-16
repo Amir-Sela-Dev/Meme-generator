@@ -95,6 +95,8 @@ a {
     border-radius: 10%;
 }
 
+
+
 .editor-container {
     display: none;
     /* align-items: center; */
@@ -293,7 +295,8 @@ canvas {
     border-radius: 29px;
     background-color: #22252c;
     min-width: 250px;
-
+    color: #fefefe;
+    font-weight: 300;
 }
 
 .searched {

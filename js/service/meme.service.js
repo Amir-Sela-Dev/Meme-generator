@@ -2,29 +2,34 @@
 const STORAGE_KEY_MEMES = 'memeDB'
 const STORAGE_KEY_IMG = 'imgDB'
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
-var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
-{ id: 2, url: 'img/2.jpg', keywords: ['funny', 'cat'] },
-{ id: 3, url: 'img/3.jpg', keywords: ['funny', 'cat'] },
-{ id: 4, url: 'img/4.jpg', keywords: ['funny', 'cat'] },
-{ id: 5, url: 'img/5.jpg', keywords: ['funny', 'cat'] },
-{ id: 6, url: 'img/6.jpg', keywords: ['funny', 'cat'] },
-{ id: 7, url: 'img/7.jpg', keywords: ['funny', 'cat'] },
-{ id: 8, url: 'img/8.jpg', keywords: ['funny', 'cat'] },
-{ id: 9, url: 'img/9.jpg', keywords: ['funny', 'cat'] },
-{ id: 10, url: 'img/10.jpg', keywords: ['funny', 'cat'] },
-{ id: 11, url: 'img/11.jpg', keywords: ['funny', 'cat'] },
-{ id: 12, url: 'img/12.jpg', keywords: ['funny', 'cat'] },
-{ id: 13, url: 'img/13.jpg', keywords: ['funny', 'cat'] },
-{ id: 14, url: 'img/14.jpg', keywords: ['funny', 'cat'] },
-{ id: 15, url: 'img/15.jpg', keywords: ['funny', 'cat'] },
-{ id: 16, url: 'img/16.jpg', keywords: ['funny', 'cat'] },
-{ id: 17, url: 'img/17.jpg', keywords: ['funny', 'cat'] },
-{ id: 18, url: 'img/18.jpg', keywords: ['funny', 'cat'] },
+var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['politic', 'trump,פוליטיקה, טראמפ ', ''] },
+{ id: 2, url: 'img/2.jpg', keywords: ['puppies', 'cute', 'love', ' animal', 'dog', 'גור', 'חמוד', 'אהבה', 'חיה', 'כלב', ''] },
+{ id: 3, url: 'img/3.jpg', keywords: ['cute', 'animal', 'dog', 'baby', 'גור', 'חמוד', 'אהבה', 'חיה', 'כלב', 'תינוק', ''] },
+{ id: 4, url: 'img/4.jpg', keywords: ['funny', 'cat', 'computer', 'מצחיק', 'חתול', 'מחשב', ''] },
+{ id: 5, url: 'img/5.jpg', keywords: ['funny', 'baby', 'success', 'מצחיק', 'תינוק', 'הצלחה', ''] },
+{ id: 6, url: 'img/6.jpg', keywords: ['funny', 'big', 'television', 'tv', 'מצחיק', 'גדול', 'טלוויזיה', ''] },
+{ id: 7, url: 'img/7.jpg', keywords: ['funny', 'baby', 'oops', 'מצחיק', 'תינוק', 'ילד', 'אופס', ''] },
+{ id: 8, url: 'img/8.jpg', keywords: ['celebrate', 'tv', 'hat', 'wizard', 'מפורסם', 'סלבריטי', 'כובע', 'קוסם', ''] },
+{ id: 9, url: 'img/9.jpg', keywords: ['funny', 'baby', 'laughing', 'grass', 'מצחיק', 'תינוק', 'ילד', 'צוחק', 'דשא', ''] },
+{ id: 10, url: 'img/10.jpg', keywords: ['obama', 'celebrate', 'politic', 'אובמה', 'מפורסם', 'סלבריטי', 'פוליטיקה', ''] },
+{ id: 11, url: 'img/11.jpg', keywords: ['funny', 'kissing', 'guys', 'fight', 'מצחיק', 'נשיקה', 'מתנשקים', 'בנים', 'קרב', ''] },
+{ id: 12, url: 'img/12.jpg', keywords: ['israel', 'celebrate', 'television', 'tv', 'ישראל', 'מפורסם', 'סלבריטי', 'מה אתם היית עושה', ''] },
+{ id: 13, url: 'img/13.jpg', keywords: ['smile', 'celebrate', 'movie', 'television', 'tv', , 'מפורסם', 'סלבריטי', 'סרט', 'חיוך', ''] },
+{ id: 14, url: 'img/14.jpg', keywords: ['celebrate', 'matrix', 'movie', 'television', 'tv', , 'מפורסם', 'סלבריטי', 'סרט', 'מטריקס', ''] },
+{ id: 15, url: 'img/15.jpg', keywords: ['funny', 'celebrate', 'movie', 'television', 'tv', , 'מפורסם', 'סלבריטי', 'סרט', , ''] },
+{ id: 16, url: 'img/16.jpg', keywords: ['funny', 'space', 'celebrate', 'movie', 'television', 'tv', , 'מפורסם', 'סלבריטי', 'סרט', 'חלל', ''] },
+{ id: 17, url: 'img/17.jpg', keywords: ['potin', 'celebrate', 'politic', 'פוטין', 'מפורסם', 'סלבריטי', 'פוליטיקה', ''] },
+{ id: 18, url: 'img/18.jpg', keywords: ['funny', 'kids', 'toy', 'baz', 'woody', 'מצחיק', 'ילד', 'צעצוע', 'באז', 'וודי', ''] },
 ];
+
+
 var gElServiceCanvas = document.getElementById('my-canvas')
 var xMiddle = gElServiceCanvas.width / 2
 var yMiddle = gElServiceCanvas.height / 2
 var canvasHeight = gElServiceCanvas.height
+var gFilterBy = ''
+
+
 var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
@@ -79,7 +84,19 @@ function getMeme() {
 }
 
 function getImgs() {
-    return gImgs
+    // var imgs = gImgs.filter((img) => {
+    //     console.log('img.keywords', img.keywords)
+    //     console.log('gFilterBy', gFilterBy)
+    //     return img.keywords.filter(word => {
+    //         console.log('word', word)
+    //         return word.includes(gFilterBy)
+    //     })
+    // })
+    const imgs = gImgs.filter((img) => {
+        return (img.keywords.includes(gFilterBy));
+    });
+    console.log('imgs', imgs)
+    return imgs
 }
 
 
@@ -156,7 +173,7 @@ function flexibleMeme() {
     const color = getRandomColor()
     setColor(color)
     const numOfLines = getRandomIntInclusive(1, 2)
-    const size = getRandomIntInclusive(1, 15)
+    const size = getRandomIntInclusive(1, 10)
     setFontSize(size)
     if (numOfLines === 2) {
         addLine()
@@ -195,9 +212,10 @@ function closeModal() {
 function getSavedMemes() {
     return loadFromStorage(STORAGE_KEY_MEMES)
 }
-
+getSavedImgs()
 function getSavedImgs() {
     var saved = getSavedMemes()
+    console.log('saved', saved)
     var savedImgs = []
     saved.forEach(meme => {
         var imgIdx = meme.selectedImgId
@@ -214,4 +232,9 @@ function downloadCanvas(elLink) {
     console.log('data', data)
     elLink.href = data // Put it on the link
     // elLink.download = 'shuki' // Can change the name of the file
+}
+
+
+function setFilter(filterBy) {
+    gFilterBy = filterBy
 }
