@@ -92,6 +92,7 @@ a {
 
 .gallery-img {
     height: 180px;
+    width: 180px;
     border-radius: 10%;
 }
 
@@ -250,6 +251,15 @@ canvas {
     padding-inline: 2px;
 
 }
+
+/* input[type="color"] {
+    background-image: url("../img/color.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: red;
+    position: relative;
+} */
 
 .saved-modal {
     width: 150px;
@@ -597,9 +607,6 @@ canvas {
         right: 100%;
     }
 
-    .main-header {
-        /* display: flex; */
-    }
 
     .main-nav {
         grid-row: 1/20;
@@ -692,7 +699,6 @@ canvas {
         height: 140vh;
     }
 
-    .editor {}
 
     canvas {
         min-width: 270px;

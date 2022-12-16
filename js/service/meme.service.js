@@ -20,6 +20,8 @@ var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['politic', 'trump,פוליט�
 { id: 16, url: 'img/16.jpg', keywords: ['funny', 'space', 'celebrate', 'movie', 'television', 'tv', , 'מפורסם', 'סלבריטי', 'סרט', 'חלל', ''] },
 { id: 17, url: 'img/17.jpg', keywords: ['potin', 'celebrate', 'politic', 'פוטין', 'מפורסם', 'סלבריטי', 'פוליטיקה', ''] },
 { id: 18, url: 'img/18.jpg', keywords: ['funny', 'kids', 'toy', 'baz', 'woody', 'מצחיק', 'ילד', 'צעצוע', 'באז', 'וודי', ''] },
+{ id: 19, url: 'img/19.jpg', keywords: ['funny', 'kids', 'toy', 'baz', 'woody', 'מצחיק', 'ילד', 'צעצוע', 'באז', 'וודי', ''] },
+{ id: 20, url: 'img/20.jpg', keywords: ['funny', 'kids', 'toy', 'baz', 'woody', 'מצחיק', 'ילד', 'צעצוע', 'באז', 'וודי', ''] },
 ];
 
 
@@ -39,6 +41,7 @@ var gMeme = {
             size: 30,
             align: 'center',
             color: 'white',
+            strokeColor: 'black',
             location: { x: xMiddle, y: 40 }
         }
     ]
@@ -54,6 +57,7 @@ var gSavedMemes = loadFromStorage(STORAGE_KEY_MEMES) || [
                 size: 20,
                 align: 'center',
                 color: 'white',
+                strokeColor: 'black',
                 location: { x: xMiddle, y: 40 }
             }
         ]
@@ -84,18 +88,9 @@ function getMeme() {
 }
 
 function getImgs() {
-    // var imgs = gImgs.filter((img) => {
-    //     console.log('img.keywords', img.keywords)
-    //     console.log('gFilterBy', gFilterBy)
-    //     return img.keywords.filter(word => {
-    //         console.log('word', word)
-    //         return word.includes(gFilterBy)
-    //     })
-    // })
     const imgs = gImgs.filter((img) => {
         return (img.keywords.includes(gFilterBy));
     });
-    console.log('imgs', imgs)
     return imgs
 }
 
@@ -111,8 +106,16 @@ function setLineTxt(txt) {
     lines[selectedLineIdx].txt = txt
 }
 
+function restartMeme() {
+    const { selectedLineIdx, lines } = gMeme
+    gMeme.selectedLineIdx = 0
+    lines[0].txt = 'I sometimes eat Falafel'
+    gMeme.lines[selectedLineIdx].size = 30
+}
+
 
 function setImg(imgId) {
+    restartMeme()
     gMeme.selectedImgId = imgId
 }
 
@@ -120,9 +123,16 @@ function setColor(color) {
     const { selectedLineIdx, lines } = gMeme
     lines[selectedLineIdx].color = color
 }
-
-function setFontSize(num) {
+function setStrokeColor(color) {
     const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].strokeColor = color
+}
+
+
+
+function setFontSize(num, value = false) {
+    const { selectedLineIdx, lines } = gMeme
+    if (value) lines[selectedLineIdx].size = 0
     lines[selectedLineIdx].size += num
 }
 
@@ -168,22 +178,28 @@ function moveLine(num) {
 
 
 function flexibleMeme() {
+    restartMeme()
     const txt = gReadytxt[getRandomIntInclusive(0, 14)]
     setLineTxt(txt)
     const color = getRandomColor()
     setColor(color)
+    const strokeColor = getRandomColor()
+    setStrokeColor(strokeColor)
     const numOfLines = getRandomIntInclusive(1, 2)
-    const size = getRandomIntInclusive(1, 10)
-    setFontSize(size)
+    const size = getRandomIntInclusive(25, 40)
+    setFontSize(size, true)
     if (numOfLines === 2) {
         addLine()
         const txt = gReadytxt[getRandomIntInclusive(0, 14)]
         setLineTxt(txt)
         const color = getRandomColor()
         setColor(color)
-        const size = getRandomIntInclusive(1, 15)
-        setFontSize(size)
+        const strokeColor = getRandomColor()
+        setStrokeColor(strokeColor)
+        const size = getRandomIntInclusive(25, 40)
+        setFontSize(size, true)
     }
+    console.log('meme', gMeme)
 }
 
 function _saveMemeToStorage() {

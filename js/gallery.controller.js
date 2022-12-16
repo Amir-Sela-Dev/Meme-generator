@@ -22,8 +22,8 @@ function onImgSelect(imgId) {
 }
 
 function onFlexible() {
-    flexibleMeme()
     onImgSelect(getRandomIntInclusive(1, 18))
+    flexibleMeme()
 }
 
 function onSavedMemes() {

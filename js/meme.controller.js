@@ -45,9 +45,9 @@ function drawMeme(imgId, lineIdx, lines) {
 
 function drawText(line, lineIdx, x, y) {
     // var line = lines[lineIdx]
-    const { txt, size, align, color } = line
+    const { txt, size, align, color, strokeColor } = line
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'black'
+    gCtx.strokeStyle = strokeColor
     gCtx.fillStyle = color
     gCtx.font = `${size}px Impact`;
     gCtx.textAlign = align
@@ -71,6 +71,11 @@ function onSetMemeText(txt) {
 function onChangeColor(color) {
     setColor(color)
     renderMeme()
+}
+function onChangeStrokeColor(color) {
+    setStrokeColor(color)
+    renderMeme()
+
 }
 
 function onChangeFontSize(num) {
