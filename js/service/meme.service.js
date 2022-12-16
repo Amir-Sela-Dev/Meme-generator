@@ -1,5 +1,6 @@
 'use strict'
-const STORAGE_KEY = 'memeDB'
+const STORAGE_KEY_MEMES = 'memeDB'
+const STORAGE_KEY_IMG = 'imgDB'
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
 var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
 { id: 2, url: 'img/2.jpg', keywords: ['funny', 'cat'] },
@@ -38,7 +39,7 @@ var gMeme = {
     ]
 }
 
-var gSavedMemes = loadFromStorage(STORAGE_KEY) || [
+var gSavedMemes = loadFromStorage(STORAGE_KEY_MEMES) || [
     {
         selectedImgId: 1,
         selectedLineIdx: 0,
@@ -169,13 +170,15 @@ function flexibleMeme() {
 }
 
 function _saveMemeToStorage() {
-    saveToStorage(STORAGE_KEY, gSavedMemes)
+    saveToStorage(STORAGE_KEY_MEMES, gSavedMemes)
 }
 
 
 function saveMeme() {
+    let memeCopy = JSON.parse(JSON.stringify(gMeme))
+
     gSavedMemes.push(gMeme)
-    saveToStorage(STORAGE_KEY, gSavedMemes)
+    saveToStorage(STORAGE_KEY_MEMES, gSavedMemes)
 }
 
 function openModal() {
@@ -190,7 +193,7 @@ function closeModal() {
 }
 
 function getSavedMemes() {
-    return loadFromStorage(STORAGE_KEY)
+    return loadFromStorage(STORAGE_KEY_MEMES)
 }
 
 function getSavedImgs() {
@@ -202,4 +205,13 @@ function getSavedImgs() {
         savedImgs.push(img)
     });
     return savedImgs
+}
+
+
+function downloadCanvas(elLink) {
+    // Gets the canvas content and convert it to base64 data URL that can be save as an image
+    const data = gElCanvas.toDataURL() // Method returns a data URL containing a representation of the image in the format specified by the type parameter.
+    console.log('data', data)
+    elLink.href = data // Put it on the link
+    // elLink.download = 'shuki' // Can change the name of the file
 }

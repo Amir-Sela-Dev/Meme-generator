@@ -40,8 +40,13 @@ function onSavedMemes() {
     });
 }
 
-function openSavedMemes() {
+
+function onOpenGallery() {
     document.querySelector('.gallery').style.display = 'grid'
     document.querySelector('.editor-container').style.display = 'none'
+}
 
+function toggleMenu() {
+    console.log('hi')
+    document.body.classList.toggle('menu-open')
 }

@@ -10,15 +10,17 @@
 </head>
 
 <body class="grid" onload="onInit()">
+    <div class="main-screen full" onclick="toggleMenu()"></div>
     <header class="main-header grid ">
         <div class="logo">MEMEGEN</div>
         <nav class="main-nav">
             <ul class="clean-list flex">
-                <li class="gallery-nav"><a href="#">Gallery</a></li>
+                <li class="gallery-nav"><a href="#" onclick="onOpenGallery()">Gallery</a></li>
                 <li class="memes-nav"><a href="#">Memes</a></li>
                 <li class="about-nav"><a href="#">About</a></li>
             </ul>
         </nav>
+        <button class="menu-toggle-btn" onclick="toggleMenu()">☰</button>
     </header>
 
     <main class="main-content">
@@ -26,13 +28,13 @@
             <h6>Meme saved!</h6>
         </div>
         <div class="gallery grid">
-            <div class="actions">
+            <div class="actions grid">
                 <div class="search-cell">
                     <input type="text" class="filter" placeholder="Search">
                 </div>
                 <div class="searched"></div>
-                <button class="more">More</button>
-                <button class="flexible" onclick="onFlexible()">Im Flexible</button>
+                <button class="more gallery-btn">More</button>
+                <button class="flexible gallery-btn" onclick="onFlexible()">Im Flexible</button>
             </div>
             <div class="img-container flex"></div>
         </div>
@@ -63,7 +65,7 @@
                 <div class="stickers"></div>
                 <div class="load-actions">
                     <button class="btn3 save" onclick="onSave()">Save</button>
-                    <button class="btn3 download" onclick="onDownload()">Download</button>
+                    <a class="btn3 download" onclick="onDownload(this)" download="my-img">Download</a>
                     <button class="btn3 publish">Publish</button>
                 </div>
             </div>

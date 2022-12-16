@@ -111,18 +111,17 @@ function getElCanvas() {
 }
 
 function onSave() {
-    // window.open(gElCanvas[0].toDataURL())
     isSavedMeme = true
     saveMeme()
     openModal()
     setTimeout(() => {
         closeModal();
-        openSavedMemes()
+        onOpenGallery()
         renderGallery()
     }, 2000)
 }
 
-function onDownload() {
-
+function onDownload(elLink) {
+    downloadCanvas(elLink)
 }
 
