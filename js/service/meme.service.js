@@ -120,6 +120,7 @@ function setLineTxt(txt) {
 }
 
 function restartMeme() {
+    isUpload = false
     _createMeme()
     restartEditor()
 }
