@@ -5,12 +5,15 @@ var isSavedMeme = false
 function renderGallery() {
     var imgs = getImgs()
     if (isSavedMeme) {
-        imgs = getSavedImgs()
-        var strHtmls = imgs.map(img => `
-        
-        <img class="gallery-img" src="${img.savedImgUrl}" alt="" data-id="${img.id}" onclick="onSavedImgSelect(${img})">
-    `
-        )
+        var mems = getSavedMemes()
+        var strHtmls = mems.map(meme => {
+            return (
+                `
+            <img class="gallery-img" src="${meme.imgUrl}" alt="" data-id="${meme.selectedImgId}" 
+            onclick="onSavedImgSelect('${meme.memeIdx}')">
+               `)
+        });
+        console.log('wow')
         document.querySelector('.img-container').innerHTML = strHtmls.join('')
         return
     }
@@ -67,11 +70,17 @@ function onFilter(filterBy) {
 }
 
 
-function onSavedImgSelect(img) {
-    console.log('img', img)
+function onSavedImgSelect(memeIdx) {
+    console.log('memeIdx', +memeIdx)
+    var savedMeme = getSavedMemeById(+memeIdx)
+    var { lines, selectedImgId, selectedLineIdx } = savedMeme
     isGallery = false
     document.querySelector('.gallery').style.display = 'none'
     document.querySelector('.editor-container').style.display = 'flex'
-    setSavedImg(imgId)
+    setSavedImg(selectedImgId)
+    setLineTxt(lines[selectedLineIdx].txt)
+    setColor(lines[selectedLineIdx].color)
+    setStrokeColor(lines[selectedLineIdx].strokeColor)
+    setFontSize(lines[selectedLineIdx].size)
     renderMeme()
 }

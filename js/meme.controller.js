@@ -3,6 +3,7 @@
 
 var gElCanvas
 var gCtx
+var gSizeOfRect = 0
 
 
 function onInit() {
@@ -10,7 +11,7 @@ function onInit() {
     gCtx = gElCanvas.getContext('2d')
     console.log('gCtx', gCtx)
     // resizeCanvas()
-    // addListeners()
+    addListeners()
     renderGallery()
     renderCanvas()
     renderMeme()
@@ -39,7 +40,7 @@ function drawMeme(imgId, lineIdx, lines) {
         lines.forEach(line => {
             drawText(line, lineIdx, line.location.x || -1, line.location.y || -1)
         });
-
+        drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
     }
 }
 
@@ -60,6 +61,7 @@ function renderMeme() {
     var { selectedImgId, selectedLineIdx, lines } = getMeme()
 
     drawMeme(selectedImgId, selectedLineIdx, lines)
+
 }
 
 
@@ -79,6 +81,7 @@ function onChangeStrokeColor(color) {
 }
 
 function onChangeFontSize(num) {
+    gSizeOfRect += num
     setFontSize(num)
     renderMeme()
 }
@@ -94,6 +97,7 @@ function onSwitchLine() {
     const { selectedLineIdx, lines } = getMeme()
     const text = lines[selectedLineIdx].txt
     document.querySelector('.meme-text').value = text
+    renderMeme()
 }
 
 function onDeleteLine() {
@@ -117,12 +121,12 @@ function getElCanvas() {
 
 function onSave() {
     const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
-    isSavedMeme = true
     saveMeme(imgDataUrl)
     openModal()
     setTimeout(() => {
         closeModal();
         onOpenGallery()
+        isSavedMeme = true
         renderGallery()
     }, 2000)
 }
@@ -146,4 +150,68 @@ function onUploadImg() {
     }
     doUploadImg(imgDataUrl, onSuccess)
 }
+
+function onAlignLeft() {
+    alignLeft()
+    renderMeme()
+}
+function onAlignRight() {
+    alignRight()
+    renderMeme()
+}
+function onAlignCenter() {
+    alignCenter()
+    renderMeme()
+}
+
+
+function restartEditor() {
+    document.querySelector('.color').value = "#ffffff"
+    document.querySelector('.sroke-color').value = "#000"
+    document.querySelector('.meme-text').value = ""
+}
+
+function drawRect(y) {
+    gCtx.beginPath()
+    gCtx.strokeStyle = 'black'
+    gCtx.strokeRect(1, (y - 25 - gSizeOfRect), gElCanvas.width, (50 + gSizeOfRect * 1.5))
+}
+
+
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+    //Listen for resize ev
+    // window.addEventListener('resize', () => {
+    //     resizeCanvas()
+    //     renderCanvas()
+
+    // })
+}
+
+function addMouseListeners() {
+    // gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mousedown', onDown)
+    // gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    // gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchstart', onDown)
+    // gElCanvas.addEventListener('touchend', onUp)
+}
+
+
+function onDown(ev) {
+    // Get the ev pos from mouse or touch
+    const pos = getEvPos(ev)
+    if (!isMemeClicked(pos)) return
+
+    setCircleDrag(true)
+    //Save the pos we start from
+    gStartPos = pos
+    document.body.style.cursor = 'grabbing'
+}
+
+
 

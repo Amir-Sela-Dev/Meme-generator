@@ -30,41 +30,33 @@ var xMiddle = gElServiceCanvas.width / 2
 var yMiddle = gElServiceCanvas.height / 2
 var canvasHeight = gElServiceCanvas.height
 var gFilterBy = ''
+var gSavedImgIdx = 1
+const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 
-var gMeme = {
-    selectedImgId: 1,
-    selectedLineIdx: 0,
-    lines: [
+
+var gMeme
+
+var gSavedMemes = loadFromStorage(STORAGE_KEY_MEMES) ||
+    [
         {
-            txt: 'I sometimes eat Falafel',
-            size: 30,
-            align: 'center',
-            color: 'white',
-            strokeColor: 'black',
-            location: { x: xMiddle, y: 40 }
+            selectedImgId: 19,
+            selectedLineIdx: 0,
+            memeIdx: gSavedImgIdx,
+            imgUrl: 'img/20.jpg',
+            lines: [
+                {
+                    txt: 'Im a saved meme!',
+                    size: 20,
+                    align: 'center',
+                    color: 'white',
+                    strokeColor: 'black',
+                    location: { x: xMiddle, y: 40 },
+                }
+            ]
         }
+
     ]
-}
-
-var gSavedMemes = loadFromStorage(STORAGE_KEY_MEMES) || [
-    {
-        selectedImgId: 1,
-        selectedLineIdx: 0,
-        imgUrl: 'img/20.jpg',
-        lines: [
-            {
-                txt: 'Im a saved meme!',
-                size: 20,
-                align: 'center',
-                color: 'white',
-                strokeColor: 'black',
-                location: { x: xMiddle, y: 40 }
-            }
-        ]
-    }
-
-]
 
 var gReadytxt = [
     '2020 in one pic',
@@ -84,6 +76,27 @@ var gReadytxt = [
     'My life be like:'
 ]
 
+_createMeme()
+
+function _createMeme() {
+    var meme =
+    {
+        selectedImgId: 1,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'I sometimes eat Falafel',
+                size: 30,
+                align: 'center',
+                color: 'white',
+                strokeColor: 'black',
+                location: { x: xMiddle, y: 40 }
+            }
+        ]
+    }
+    gMeme = meme
+    console.log('gmeme', gMeme)
+}
 function getMeme() {
     return gMeme
 }
@@ -108,10 +121,8 @@ function setLineTxt(txt) {
 }
 
 function restartMeme() {
-    const { selectedLineIdx, lines } = gMeme
-    gMeme.selectedLineIdx = 0
-    lines[0].txt = 'I sometimes eat Falafel'
-    gMeme.lines[selectedLineIdx].size = 30
+    _createMeme()
+    restartEditor()
 }
 
 
@@ -150,7 +161,7 @@ function addLine() {
     const { selectedLineIdx } = gMeme
     let x = xMiddle
     let y = 40
-    if (selectedLineIdx === 1) y = canvasHeight - 40
+    if (selectedLineIdx === 1) y = canvasHeight - 70
     if (selectedLineIdx >= 2) y = yMiddle
     newLine.location = { x, y }
     gMeme.lines.push(newLine)
@@ -209,9 +220,10 @@ function _saveMemeToStorage() {
 
 
 function saveMeme(imdUrl) {
+    gSavedImgIdx++
     let memeCopy = JSON.parse(JSON.stringify(gMeme))
     memeCopy.imgUrl = imdUrl
-    console.log('memeCopy', memeCopy)
+    memeCopy.memeIdx = gSavedImgIdx
     gSavedMemes.push(memeCopy)
     saveToStorage(STORAGE_KEY_MEMES, gSavedMemes)
 }
@@ -256,4 +268,66 @@ function downloadCanvas(elLink) {
 
 function setFilter(filterBy) {
     gFilterBy = filterBy
+}
+
+function setSavedImg(imgId) {
+    restartMeme()
+    gMeme.selectedImgId = imgId
+
+}
+
+function getSavedMemeById(id) {
+    const meme = gSavedMemes.find(meme => id === meme.memeIdx)
+    return meme
+}
+
+function alignLeft() {
+    const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].location.x += -20
+}
+function alignRight() {
+    const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].location.x += 20
+}
+
+function alignCenter() {
+    const { selectedLineIdx, lines } = gMeme
+    lines[selectedLineIdx].location.x = xMiddle
+}
+
+
+
+function getEvPos(ev) {
+    // Gets the offset pos , the default pos
+    let pos = {
+        x: ev.offsetX,
+        y: ev.offsetY,
+    }
+    // Check if its a touch ev
+    if (TOUCH_EVS.includes(ev.type)) {
+        console.log('ev:', ev)
+        //soo we will not trigger the mouse ev
+        ev.preventDefault()
+        //Gets the first touch point
+        ev = ev.changedTouches[0]
+        //Calc the right pos according to the touch screen
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+        }
+    }
+    return pos
+}
+
+
+
+function isMemeClicked(clickedPos) {
+    console.log('clickedPos', clickedPos)
+    const { selectedLineIdx, lines } = gMeme
+    const pos = lines[selectedLineIdx].location
+    console.log('pos', pos)
+    // Calc the distance between two dots
+    const distance = Math.sqrt((pos.x - clickedPos.x) ** 2 + (pos.y - clickedPos.y) ** 2)
+    //If its smaller then the radius of the circle we are inside
+    return distance <= gCircle.size
 }
