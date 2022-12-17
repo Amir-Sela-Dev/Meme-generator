@@ -715,7 +715,7 @@ canvas {
     }
 
     .search-cell {
-        grid-column: 1/12;
+        grid-column: 4/16;
     }
 
     .searched {
@@ -726,12 +726,12 @@ canvas {
 
     .flexible {
         grid-row: 4/5;
-        grid-column: 2/4;
+        grid-column: 10/12;
     }
 
     .upload {
         grid-row: 4/5;
-        grid-column: 5/7;
+        grid-column: 14/16;
 
     }
 
@@ -764,6 +764,16 @@ canvas {
 
     .main-footer {
         margin-top: 80%;
+    }
+
+    .img-container {
+        margin-inline: 15px;
+    }
+
+    .gallery-img {
+        height: 130px;
+        width: 130px;
+
     }
 
 }
