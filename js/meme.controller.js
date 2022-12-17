@@ -4,12 +4,14 @@
 var gElCanvas
 var gCtx
 var gSizeOfRect = 0
+var isDownload = false
+var isFirstOpen = true
+var isUpload = false
 
 
 function onInit() {
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
-    console.log('gCtx', gCtx)
     // resizeCanvas()
     addListeners()
     renderGallery()
@@ -33,15 +35,29 @@ function resizeCanvas() {
 
 function drawMeme(imgId, lineIdx, lines) {
     var img = getImgById(imgId)
-    const elImg = new Image()
+    var elImg = new Image()
     elImg.src = img.url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
         lines.forEach(line => {
             drawText(line, lineIdx, line.location.x || -1, line.location.y || -1)
         });
-        drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
+        if (!isDownload && !isFirstOpen) drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
+
     }
+}
+
+function drewUploadMeme(imgId, lineIdx, lines) {
+    var img = getUploadImg()
+    var elImg = img
+    elImg.onload = () => {
+        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+        lines.forEach(line => {
+            drawText(line, lineIdx, line.location.x || -1, line.location.y || -1)
+        });
+        if (!isDownload && !isFirstOpen) drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
+    }
+
 }
 
 function drawText(line, lineIdx, x, y) {
@@ -59,13 +75,18 @@ function drawText(line, lineIdx, x, y) {
 
 function renderMeme() {
     var { selectedImgId, selectedLineIdx, lines } = getMeme()
-
+    if (isUpload) {
+        drewUploadMeme(selectedImgId, selectedLineIdx, lines)
+        return
+    }
     drawMeme(selectedImgId, selectedLineIdx, lines)
 
 }
 
 
+
 function onSetMemeText(txt) {
+    isFirstOpen = false
     setLineTxt(txt)
     renderMeme()
 }
@@ -138,7 +159,12 @@ function onOpenSaved() {
 }
 
 function onDownload(elLink) {
-    downloadCanvas(elLink)
+    isDownload = true
+    renderMeme()
+    setTimeout(() => {
+        downloadCanvas(elLink)
+        isDownload = false
+    }, 1);
 }
 
 

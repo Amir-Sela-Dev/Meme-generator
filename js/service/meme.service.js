@@ -95,7 +95,6 @@ function _createMeme() {
         ]
     }
     gMeme = meme
-    console.log('gmeme', gMeme)
 }
 function getMeme() {
     return gMeme
@@ -189,8 +188,9 @@ function moveLine(num) {
 }
 
 
-function flexibleMeme() {
+function flexibleMeme(numOfPic) {
     restartMeme()
+    gMeme.selectedImgId = numOfPic
     const txt = gReadytxt[getRandomIntInclusive(0, 14)]
     setLineTxt(txt)
     const color = getRandomColor()
@@ -260,9 +260,8 @@ function getSavedImgs() {
 function downloadCanvas(elLink) {
     // Gets the canvas content and convert it to base64 data URL that can be save as an image
     const data = gElCanvas.toDataURL() // Method returns a data URL containing a representation of the image in the format specified by the type parameter.
-    console.log('data', data)
     elLink.href = data // Put it on the link
-    // elLink.download = 'shuki' // Can change the name of the file
+    elLink.download = 'Your-Meme'
 }
 
 
