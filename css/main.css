@@ -358,6 +358,12 @@ canvas {
     background-color: #b79d9d;
     text-decoration: none;
     cursor: pointer;
+    border: black solid 2px;
+}
+
+.upload:hover {
+    box-shadow: 10 6px 6px 1px rgba(152, 192, 223, 0.441);
+    background-image: linear-gradient(-38deg, #b6edfd97 0%, #03d2f7da 100%);
 }
 
 .file-input {
