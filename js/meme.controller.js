@@ -50,13 +50,13 @@ function drawMeme(imgId, lineIdx, lines) {
 function drewUploadMeme(imgId, lineIdx, lines) {
     var img = getUploadImg()
     var elImg = img
-    elImg.onload = () => {
-        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
-        lines.forEach(line => {
-            drawText(line, lineIdx, line.location.x || -1, line.location.y || -1)
-        });
-        if (!isDownload && !isFirstOpen) drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
-    }
+
+    gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+    lines.forEach(line => {
+        drawText(line, lineIdx, line.location.x || -1, line.location.y || -1)
+    });
+    if (!isDownload && !isFirstOpen) drawRect(lines[lineIdx].location.y || -1, gSizeOfRect)
+
 
 }
 

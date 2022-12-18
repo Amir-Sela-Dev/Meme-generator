@@ -41,16 +41,6 @@ function onFlexible() {
     renderMeme()
 }
 
-function onSavedMemes() {
-    var savedMemes = getSavedMemes()
-    console.log('savedMemes', savedMemes)
-    savedMemes.forEach(meme => {
-        var img = meme.selectedImgId
-
-
-
-    });
-}
 
 
 function onOpenGallery() {

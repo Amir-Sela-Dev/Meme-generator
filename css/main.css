@@ -747,13 +747,21 @@ canvas {
     }
 
     .editor {
-        margin-top: 70px;
+        /* margin-top: 70px; */
+        min-height: 300px;
     }
 
 
     canvas {
-        min-width: 270px;
-        min-height: 300px;
+        min-width: 200px;
+        min-height: 230px;
+        justify-content: center;
+        align-self: center;
+    }
+
+    .canvas-container {
+        justify-content: center;
+        align-self: center;
     }
 
 
