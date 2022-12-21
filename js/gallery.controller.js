@@ -66,6 +66,7 @@ function onFilter(filterBy) {
 function onSavedImgSelect(memeIdx) {
     isFirstOpen = true
     var savedMeme = getSavedMemeById(+memeIdx)
+    console.log('savedMeme', savedMeme)
     var { lines, selectedImgId, selectedLineIdx } = savedMeme
     isGallery = false
     document.querySelector('.gallery').style.display = 'none'
@@ -74,7 +75,7 @@ function onSavedImgSelect(memeIdx) {
     setLineTxt(lines[selectedLineIdx].txt)
     setColor(lines[selectedLineIdx].color)
     setStrokeColor(lines[selectedLineIdx].strokeColor)
-    setFontSize(lines[selectedLineIdx].size)
+    setFontSize(lines[selectedLineIdx].size, true)
     renderMeme()
 }
 

@@ -217,13 +217,13 @@ function addListeners() {
 
 function addMouseListeners() {
     // gElCanvas.addEventListener('mousemove', onMove)
-    // gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousedown', onDown)
     // gElCanvas.addEventListener('mouseup', onUp)
 }
 
 function addTouchListeners() {
     // gElCanvas.addEventListener('touchmove', onMove)
-    // gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchstart', onDown)
     // gElCanvas.addEventListener('touchend', onUp)
 }
 
@@ -231,6 +231,11 @@ function addTouchListeners() {
 function onDown(ev) {
     // Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
+    let meme = getMeme()
+    let { selectedLineIdx, lines } = meme
+
+    let txtWidth = gCtx.measureText(`${lines[selectedLineIdx].txt}`)
+    console.log('txtWidth', txtWidth)
     if (!isMemeClicked(pos)) return
 
     setCircleDrag(true)
